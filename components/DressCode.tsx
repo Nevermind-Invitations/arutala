@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 interface DressCodeProps {
   title: string;
@@ -13,10 +15,28 @@ const DressCode: React.FC<DressCodeProps> = ({ title, description, colors }) => 
     colorRows.push(colors.slice(i, i + 4));
   }
 
+  // Use inView to trigger animation when the component becomes visible
+  const { ref, inView } = useInView({ triggerOnce: true });
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { delay: 1, duration: 0.8 },
+    },
+  };
+
   return (
-    <div className="">
-      <h1 className="text-white text-[30px] mt-6 mb-2 font-edensor">{title}</h1>
-      <p className="text-white">{description}</p>
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      variants={containerVariants}
+      className=""
+    >
+      <h1 className="text-black text-center text-[30px] mt-6 mb-2 font-edensor">{title}</h1>
+      <p className="text-black text-center">{description}</p>
       <table className="w-full mt-3 border-separate border-spacing-1 -ml-[1px]">
         <tbody>
           {colorRows.map((row, index) => (
@@ -25,16 +45,14 @@ const DressCode: React.FC<DressCodeProps> = ({ title, description, colors }) => 
                 <th
                   key={idx}
                   style={{ backgroundColor: color }}
-                  className={`w-12 h-12 ${idx === 0 ? '-ml-1' : ''} ${
-                    idx === row.length - 1 ? '-mr-1' : ''
-                  }`}
+                  className={`w-12 h-12 ${idx === 0 ? '-ml-1' : ''} ${idx === row.length - 1 ? '-mr-1' : ''}`}
                 />
               ))}
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
+    </motion.div>
   );
 };
 

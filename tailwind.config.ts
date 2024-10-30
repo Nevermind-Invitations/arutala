@@ -9,10 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'cover-1': "url('/images/cover-1.jpg')",
+        'cover': "url('/images/cover-1.jpg')",
+        'hero-bg': "url('/images/hero-bg.jpg')",
+        'hero-lg-bg': "url('/images/hero-lg-bg.jpg')",
       },
+      backgroundSize: {
+        'cover': 'cover',
+      },
+      backgroundPosition: {
+        'center': 'center',
+      },
+      fontFamily: {
+        edensor: ["var(--font-edensor)"],
+        belgiano: ["var(--font-belgiano)"],
+        oldscientific : ["var(--font-oldscientific)"],
+        abigail : ["var(--font-abigail)"],
+      }
     },
   },
   plugins: [],

@@ -1,33 +1,96 @@
+@import '/public/font/font.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* Fix untuk layar besar dengan DPR tinggi (seperti laptop) saat diatur ke mode mobile */
+@media (min-width: 1024px) and (max-width: 1440px) and (-webkit-min-device-pixel-ratio: 1.5) {
+  .bg-cover-1 {
+    background-attachment: scroll !important; /* Ubah ke scroll untuk laptop */
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* Untuk perangkat mobile sebenarnya (iPhone, Android) */
+@media (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 1.5) {
+  .bg-cover-1 {
+    background-attachment: fixed !important; /* Tetap fixed pada mobile devices */
+    background-size: cover !important;
+    background-position: center !important;
   }
 }
+
+//Hero Css
+.fade-slide-up-enter {
+  opacity: 0;
+  transform: translateY(150%);
+}
+.fade-slide-up-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 800ms, transform 800ms;
+}
+.fade-slide-up-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-slide-up-exit-active {
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: opacity 800ms, transform 800ms;
+}
+
+.slide-up-enter {
+  opacity: 0;
+  transform: translateY(150%); /* Memulai dari bawah */
+}
+.slide-up-enter-active {
+  opacity: 1;
+  transform: translateY(0); /* Ke posisi normal */
+  transition: opacity 800ms, transform 800ms;
+}
+.slide-up-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-up-exit-active {
+  opacity: 0;
+  transform: translateY(-50%); /* Pergi ke atas */
+  transition: opacity 800ms, transform 800ms;
+}
+
+
+/* Audio Icon */
+.audio-icon-wrapper {
+  cursor: pointer;
+}
+
+.rotate {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+/* Animasi untuk intro */
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 100ms ease-in-out;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+}
+
+

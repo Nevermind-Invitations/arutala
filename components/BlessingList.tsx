@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, useInView } from 'framer-motion';
 
 interface Blessing {
     nama: string;
@@ -23,15 +24,28 @@ const BlessingList: React.FC<BlessingListProps> = ({ blessings }) => {
 
     return (
         <div className="mt-8 text-white w-full h-[500px] overflow-y-auto">
-            {blessings.map((blessing, index) => (
-                <div key={index} className="p-2 bg-gray-800 rounded-lg bg-opacity-40 my-2">
-                    <p className='font-belgiano'>{blessing.nama}</p>
-                    <p className='text-[10px] text-gray-300'>{timeAgo(blessing.createdAt)}</p>
-                    <p>{blessing.ucapan}</p>
-                </div>
-            ))}
+            {blessings.map((blessing, index) => {
+                const ref = React.useRef<HTMLDivElement>(null);
+                const isInView = useInView(ref, { once: true });
+
+                return (
+                    <motion.div
+                        ref={ref}
+                        key={index}
+                        className="p-2 bg-gray-800 rounded-lg bg-opacity-40 my-2"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 20 }}
+                        transition={{ duration: 1.5, delay: index * 0.1 }}
+                    >
+                        <p className='font-belgiano'>{blessing.nama}</p>
+                        <p className='text-[10px] text-gray-300'>{timeAgo(blessing.createdAt)}</p>
+                        <p>{blessing.ucapan}</p>
+                    </motion.div>
+                );
+            })}
         </div>
     );
 };
 
 export default BlessingList;
+    
